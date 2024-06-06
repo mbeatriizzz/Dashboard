@@ -1,10 +1,32 @@
 import globals from "globals";
 import pluginJs from "@eslint/js";
-import pluginReactConfig from "eslint-plugin-react/configs/recommended.js";
-
+import pluginReact from "eslint-plugin-react";
+import pluginPrettier from "eslint-plugin-prettier";
+import prettierConfig from "eslint-config-prettier";
 
 export default [
-  {languageOptions: { globals: globals.browser }},
+  {
+    languageOptions: {
+      globals: globals.browser,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+  },
   pluginJs.configs.recommended,
-  pluginReactConfig,
+  pluginReact.configs.recommended,
+  {
+    plugins: {
+      react: pluginReact,
+      prettier: pluginPrettier,
+    },
+    rules: {
+      "prettier/prettier": "error",
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+  },
+  prettierConfig,
 ];
